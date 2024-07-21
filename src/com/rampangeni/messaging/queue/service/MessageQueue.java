@@ -1,5 +1,6 @@
 package com.rampangeni.messaging.queue.service;
 
+import com.rampangeni.messaging.queue.model.Message;
 import com.rampangeni.messaging.queue.model.Subscriber;
 import com.rampangeni.messaging.queue.model.Topic;
 
@@ -9,7 +10,7 @@ public class MessageQueue {
 
     private static MessageQueue instance;
     private HashMap<String,Topic> topics;
-    private HashMap<String,Subscriber> subscribers;
+    private HashMap<String, Subscriber> subscribers;
 
     private MessageQueue() {
         topics = new HashMap<>();
@@ -38,27 +39,18 @@ public class MessageQueue {
         return name;
     }
 
-    public String createSubscriber(String name, Integer sleepTime) {
-        if (this.subscribers.containsKey(name)) {
-            throw new RuntimeException("Duplicate subscriber name");
-        }
-
-        Subscriber subscriber = new Subscriber(name, sleepTime);
-        this.subscribers.put(name,subscriber);
-        return name;
-    }
-
-    public void subscribeToTopic(String topicName, String subscriberName) throws Exception {
-        if (!subscribers.containsKey(subscriberName)) {
-            throw new Exception("Subscriber doesn't exist \n");
-        }
-
+    public void subscribeToTopic(String topicName, Subscriber subscriber) throws Exception {
         if (!topics.containsKey(topicName)) {
-            throw new Exception("Topic doesn't exist \n");
+            throw new Exception("Topic doesn't exist");
         }
+
+        if (subscriber == null) {
+            throw new Exception("Subscriber is null");
+        }
+
+        subscribers.put(subscriber.getName(), subscriber);
 
         Topic topic = topics.get(topicName);
-        Subscriber subscriber = subscribers.get(subscriberName);
         topic.subscribeToTopic(subscriber);
     }
 

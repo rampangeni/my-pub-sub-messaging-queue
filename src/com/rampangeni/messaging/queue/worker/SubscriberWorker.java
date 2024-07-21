@@ -1,8 +1,8 @@
-package com.rampangeni.messaging.queue.handler;
+package com.rampangeni.messaging.queue.worker;
 
 import com.rampangeni.messaging.queue.model.Subscriber;
 import com.rampangeni.messaging.queue.model.Topic;
-import com.rampangeni.messaging.queue.service.Message;
+import com.rampangeni.messaging.queue.model.Message;
 
 import java.util.ArrayList;
 import java.util.List;

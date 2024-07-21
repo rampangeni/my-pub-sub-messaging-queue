@@ -1,42 +1,48 @@
-import com.rampangeni.messaging.queue.service.Message;
+import com.rampangeni.messaging.queue.model.Message;
+import com.rampangeni.messaging.queue.service.PublishMessage;
+import com.rampangeni.messaging.queue.model.Subscriber;
 import com.rampangeni.messaging.queue.service.MessageQueue;
+import com.rampangeni.messaging.queue.service.SubscriberService;
 
 import java.util.Date;
 
 public class Main {
     public static void main(String[] args) throws Exception {
+        /* Message Queue */
         MessageQueue messageQueue = MessageQueue.getMessageQueue();
 
-        String studentTopicId = messageQueue.createTopic("studentTopic");
-        String teacherTopicId = messageQueue.createTopic("teacherTopic");
+        /* Create Topic */
+        String studentTopic = messageQueue.createTopic("studentTopic");
+        String teacherTopic = messageQueue.createTopic("teacherTopic");
 
-        String mathsTeacherSubscriberId = messageQueue.createSubscriber(
+        /* Create Subscriber */
+        SubscriberService subscriberService = new SubscriberService();
+        Subscriber mathsTeacherSubscriber = subscriberService.createSubscriber(
                 "mathsTeacherSubscriber", 10000);
-        String scienceTeacherSubscriberId = messageQueue.createSubscriber(
+        Subscriber scienceTeacherSubscriber = subscriberService.createSubscriber(
                 "scienceTeacherSubscriber", 5000);
-
-        messageQueue.subscribeToTopic(teacherTopicId, mathsTeacherSubscriberId);
-        messageQueue.subscribeToTopic(teacherTopicId, scienceTeacherSubscriberId);
-
-        String evsTeacherSubscriberId = messageQueue.createSubscriber(
+        Subscriber evsTeacherSubscriber = subscriberService.createSubscriber(
                 "evsTeacherSubscriber", 15000);
-        messageQueue.subscribeToTopic(teacherTopicId, evsTeacherSubscriberId);
-
-        Message teacherMessage1 = new Message(new Date().toString(), "Salary credited");
-        messageQueue.publishToTopic(teacherTopicId, teacherMessage1);
-
-        String class4StudentSubscriberId = messageQueue.createSubscriber(
+        Subscriber class4StudentSubscriberId = subscriberService.createSubscriber(
                 "class4StudentSubscriber", 10000);
-        String class5StudentSubscriberId = messageQueue.createSubscriber(
+        Subscriber class5StudentSubscriberId = subscriberService.createSubscriber(
                 "class5StudentSubscriber", 10000);
 
-        messageQueue.subscribeToTopic(studentTopicId, class4StudentSubscriberId);
-        messageQueue.subscribeToTopic(studentTopicId, class5StudentSubscriberId);
+        /* Subscribe to Topic */
+        messageQueue.subscribeToTopic(teacherTopic, mathsTeacherSubscriber);
+        messageQueue.subscribeToTopic(teacherTopic, scienceTeacherSubscriber);
+        messageQueue.subscribeToTopic(teacherTopic, evsTeacherSubscriber);
+        messageQueue.subscribeToTopic(studentTopic, class4StudentSubscriberId);
+        messageQueue.subscribeToTopic(studentTopic, class5StudentSubscriberId);
 
-        Message studentMessage = new Message(new Date().toString(), "Marks published");
-        messageQueue.publishToTopic(studentTopicId, studentMessage);
-
+        /* Messages */
+        Message teacherMessage1 = new Message(new Date().toString(), "Salary credited");
         Message teacherMessage2 = new Message(new Date().toString(), "Be ready for PTM");
-        messageQueue.publishToTopic(teacherTopicId, teacherMessage2);
+        Message studentMessage = new Message(new Date().toString(), "Marks published");
+
+        /* Start Publishing Messages */
+        PublishMessage publishMessage1 = new PublishMessage(teacherTopic, teacherMessage1);
+        PublishMessage publishMessage2 = new PublishMessage(teacherTopic, teacherMessage2);
+        PublishMessage publishMessage3 = new PublishMessage(studentTopic, studentMessage);
     }
 }

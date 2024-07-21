@@ -1,8 +1,7 @@
 package com.rampangeni.messaging.queue.model;
 
-import com.rampangeni.messaging.queue.handler.SubscriberWorker;
+import com.rampangeni.messaging.queue.worker.SubscriberWorker;
 import com.rampangeni.messaging.queue.model.interfaces.TopicInterface;
-import com.rampangeni.messaging.queue.service.Message;
 
 import java.util.ArrayList;
 import java.util.HashMap;

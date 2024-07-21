@@ -1,7 +1,5 @@
 package com.rampangeni.messaging.queue.model;
 
-import com.rampangeni.messaging.queue.service.Message;
-
 import java.util.UUID;
 
 public class Data {

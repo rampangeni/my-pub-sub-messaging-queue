@@ -1,7 +1,7 @@
 package com.rampangeni.messaging.queue.model;
 
+import com.rampangeni.messaging.queue.model.Message;
 import com.rampangeni.messaging.queue.model.interfaces.SubscriberInterface;
-import com.rampangeni.messaging.queue.service.Message;
 
 import java.util.concurrent.atomic.AtomicInteger;
 

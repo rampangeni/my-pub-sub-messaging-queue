@@ -1,4 +1,4 @@
-package com.rampangeni.messaging.queue.service;
+package com.rampangeni.messaging.queue.model;
 
 import jdk.nashorn.internal.objects.annotations.Getter;
 
@@ -17,5 +17,10 @@ public class Message {
 
     public String getValue() {
         return this.value;
+    }
+
+    @Override
+    public String toString() {
+        return this.key + " -> " + this.value;
     }
 }

@@ -2,7 +2,7 @@ package com.rampangeni.messaging.queue.model.interfaces;
 
 
 import com.rampangeni.messaging.queue.model.Subscriber;
-import com.rampangeni.messaging.queue.service.Message;
+import com.rampangeni.messaging.queue.model.Message;
 
 public interface TopicInterface {
     String getName();
